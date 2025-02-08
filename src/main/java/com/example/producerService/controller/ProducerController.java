@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping("/api/producer")
 public class ProducerController {
@@ -21,6 +23,7 @@ public class ProducerController {
     }
     
     @PostMapping("/sendjson")
+    @Operation(summary = "Creation  d'un topic Kafka et envoie d'une donnes ", description = "Permet de créer un topic en envoyant son nom en paramètre et envoi des donnes au topic.")
     public ResponseEntity<String> sendMessage(@RequestParam String topic, @RequestBody Map<String, Object> request) {
         try {
             String messageJson = objectMapper.writeValueAsString(request);
