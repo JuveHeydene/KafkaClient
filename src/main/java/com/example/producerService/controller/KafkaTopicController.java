@@ -6,11 +6,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaAdmin;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.Collections;
 import java.util.concurrent.ExecutionException;
 
 @RestController
 @RequestMapping("/kafka")
+@Tag(name = "Kafka API", description = "Endpoints pour la gestion des topics Kafka")
 public class KafkaTopicController {
 
     private final KafkaAdmin kafkaAdmin;
@@ -22,7 +26,9 @@ public class KafkaTopicController {
         this.kafkaAdmin = kafkaAdmin;
     }
 
+
     @PostMapping("/createTopic")
+    @Operation(summary = "Créer un topic Kafka", description = "Permet de créer un topic en envoyant son nom en paramètre.")
     public String createTopic(@RequestParam String topicName) {
         try (AdminClient adminClient = AdminClient.create(kafkaAdmin.getConfigurationProperties())) {
             NewTopic newTopic = new NewTopic(topicName, 1, (short) 1);
