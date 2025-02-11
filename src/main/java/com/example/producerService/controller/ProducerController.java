@@ -22,15 +22,19 @@ public class ProducerController {
         this.kafkaProducerService = kafkaProducerService;
     }
     
-    @PostMapping("/sendjson")
-    @Operation(summary = "Creation  d'un topic Kafka et envoie d'une donnes ", description = "Permet de créer un topic en envoyant son nom en paramètre et envoi des donnes au topic.")
-    public ResponseEntity<String> sendMessage(@RequestParam String topic, @RequestBody Map<String, Object> request) {
+    @PostMapping("/push-content")
+    @Operation(summary = "Endpoint de publication d'un message dans un topic de communication", description = "Endpoint qui sera utilisé par chaque service afin de publier des données à partir des topics de communication.")
+    public ResponseEntity<String> sendMessage(@RequestParam String topic, @RequestBody Object request) {
         try {
+            // Sérialisation de l'objet DTO en JSON
             String messageJson = objectMapper.writeValueAsString(request);
+            
+            // Envoi du message au topic Kafka
             kafkaProducerService.sendMessage(topic, messageJson);
-            return ResponseEntity.ok("Message envoyé au topic : " + topic);
+
+            return ResponseEntity.ok(" Message envoyé au topic : " + topic);
         } catch (Exception e) {
-            return ResponseEntity.internalServerError().body("Erreur lors de l'envoi du message : " + e.getMessage());
+            return ResponseEntity.internalServerError().body(" Erreur lors de l'envoi du message : " + e.getMessage());
         }
     }
 }
