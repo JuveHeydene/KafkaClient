@@ -6,7 +6,7 @@ Cette API REST permet aux microservices d'envoyer des messages dans des topics s
 Cette API expose un unique endpoint permettant de publier des messages dans un topic (Kafka dans notre cas d'espèce) en envoyant des données sous format JSON.
 
 ## Authentification
-Actuellement, cette API ne requiert pas d'authentification. Cependant, il est recommandé d'ajouter un mécanisme de sécurité comme OAuth2 ou une API Key si nécessaire pour restreindre l'accès.
+Toutes les requêtes nécessitent une clé API (api_key) incluse dans l'URL. Assurez-vous de protéger votre clé API pour éviter tout usage non autorisé.
 
 ## Routes
 
@@ -21,7 +21,7 @@ Actuellement, cette API ne requiert pas d'authentification. Cependant, il est re
 
 #### Exemple de requête
 ```bash
-curl -X POST "http://localhost:8080/api/producer/push-content?topic=mon-topic" \
+curl -X POST "http://localhost:8080/api/producer/push-content?topic=mon-topic&apiKey=MA_CLE_SECRETTE" \
      -H "Content-Type: application/json" \
      -d '{"id": 123, "message": "Bonjour Kafka!"}'
 ```
