@@ -1,0 +1,24 @@
+server:
+    port: 4014
+    error:
+        include-message: always
+eureka:
+    client:
+     serviceUrl:
+        default: http://localhost:8761/eureka
+
+spring:
+    application:
+        name: notification
+    cassandra:
+        local-datacenter: datacenter1
+        keyspace-name: yowyobdb 
+        port: 9042
+        contact-points: localhost 
+
+
+
+yowyob:
+    openapi:
+        prod-url: http://localhost:4000
+        dev-url: http://localhost:4000
